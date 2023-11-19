@@ -2,6 +2,7 @@ package com.bdpq.FormData.service;
 
 import com.bdpq.FormData.dto.PersonDto;
 import com.bdpq.FormData.model.Person;
+import com.bdpq.FormData.model.Role;
 import com.bdpq.FormData.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,7 +51,6 @@ public class PersonService implements UserDetailsService {
         if(dbPerson.isPresent()){
             Person person = dbPerson.get();
 
-            System.out.println("working properly!");
 //          update the person
             person.setName(personDto.getName());
             person.setPhone(personDto.getPhone());
@@ -76,9 +76,9 @@ public class PersonService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Map<String, String> params = new HashMap<>();
-        params.put("email", email);
+        params.put("name", username);
         Optional<Person> person = getPerson(params);
         if(!person.isPresent()){
             throw new UsernameNotFoundException("user not exists by the email");
@@ -86,6 +86,6 @@ public class PersonService implements UserDetailsService {
         Set<GrantedAuthority> authorities = person.get().getRole().stream()
                 .map((role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
-        return new org.springframework.security.core.userdetails.User(email, person.get().getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(username, person.get().getPassword(), authorities);
     }
 }
