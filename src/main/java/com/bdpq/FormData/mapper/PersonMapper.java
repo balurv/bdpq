@@ -13,7 +13,8 @@ public class PersonMapper {
                 person.getPassword(),
                 person.getCreatedOn(),
                 person.getGender(),
-                person.getRole()
+                person.getRole(),
+                person.getFarmFields()
         );
     }
 
@@ -26,7 +27,8 @@ public class PersonMapper {
                 personDto.getPassword(),
                 personDto.getCreatedOn(),
                 personDto.getGender(),
-                personDto.getRole()
+                personDto.getRole(),
+                personDto.getFarmFields()
         );
     }
 }

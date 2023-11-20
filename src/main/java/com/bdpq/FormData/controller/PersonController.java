@@ -32,7 +32,7 @@ public class PersonController {
             PersonDto personDto = PersonMapper.toPersonDto(person.get());
             return new ResponseEntity<>(personDto, HttpStatus.OK);
         }
-        return new ResponseEntity<>(new String("For Given filter, Data Not Found!"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("For Given filter, Data Not Found!", HttpStatus.NOT_FOUND);
     }
 
     @PutMapping

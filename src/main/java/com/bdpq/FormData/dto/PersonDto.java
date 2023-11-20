@@ -1,5 +1,6 @@
 package com.bdpq.FormData.dto;
 
+import com.bdpq.FormData.model.FarmField;
 import com.bdpq.FormData.model.Gender;
 import com.bdpq.FormData.model.Role;
 import lombok.*;
@@ -21,4 +22,5 @@ public class PersonDto {
     private LocalDateTime createdOn;
     private Gender gender;
     private Set<Role> role;
+    private Set<FarmField> farmFields;
 }

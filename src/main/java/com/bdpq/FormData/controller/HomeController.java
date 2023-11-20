@@ -49,7 +49,6 @@ public class HomeController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody PersonDto signUpDto) {
-        System.out.println(signUpDto.toString());
         Map<String, String> params = new HashMap<>();
         params.put("email", signUpDto.getEmail().toString());
         params.put("phone", signUpDto.getPhone().toString());
