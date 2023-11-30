@@ -1,12 +1,16 @@
 package com.bdpq.FormData.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
+import java.util.Set;
+
 @Entity
-@ToString
-@Setter
+@Data
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class FarmField {
@@ -22,6 +26,14 @@ public class FarmField {
     private Double totalArea;
     private SoilType soilType;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "person_id")
-    private Person owner;
+    private Farmer owner;
+    @OneToMany (mappedBy = "farmField", cascade = CascadeType.ALL)
+    private Set<Image> image;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, latitude, longitude, length, breath, totalArea, soilType);
+    }
 }

@@ -1,5 +1,6 @@
 package com.bdpq.FormData.dto;
 
+import com.bdpq.FormData.model.DriverLicense;
 import com.bdpq.FormData.model.FarmField;
 import com.bdpq.FormData.model.Gender;
 import com.bdpq.FormData.model.Role;
@@ -23,4 +24,5 @@ public class PersonDto {
     private Gender gender;
     private Set<Role> role;
     private Set<FarmField> farmFields;
+    private Set<DriverLicense> driverLicenses;
 }
