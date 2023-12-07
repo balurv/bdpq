@@ -2,6 +2,8 @@ package com.bdpq.FormData.service;
 
 import com.bdpq.FormData.dto.PersonDto;
 import com.bdpq.FormData.model.Driver;
+import com.bdpq.FormData.model.DriverLicense;
+import com.bdpq.FormData.model.Machinery;
 import com.bdpq.FormData.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -65,6 +68,38 @@ public class DriverService {
         if(dbPerson.isPresent()){
             Driver driver = dbPerson.get();
             driverRepository.delete(driver);
+            return driver;
+        }
+        return null;
+    }
+
+    public Driver updateDriverLicense(Long driverId, DriverLicense driverLicense) {
+        Map<String, String> param = new HashMap<>();
+        param.put("id", driverId.toString());
+        Optional<Driver> optionalDriver = getDriver(param);
+        if(optionalDriver.isPresent()){
+            Driver driver = optionalDriver.get();
+            driverLicense.setDriving_license(driver);
+            Set<DriverLicense> existingDrivingLicense = driver.getLicense();
+            existingDrivingLicense.add(driverLicense);
+            driver.setLicense(existingDrivingLicense);
+            driverRepository.save(driver);
+            return driver;
+        }
+        return null;
+    }
+
+    public Driver updateMachinery(Long driverId, Machinery machinery) {
+        Map<String, String> param = new HashMap<>();
+        param.put("id", driverId.toString());
+        Optional<Driver> optionalDriver = getDriver(param);
+        if(optionalDriver.isPresent()){
+            Driver driver = optionalDriver.get();
+            machinery.setVehicle_owner(driver);
+            Set<Machinery> machinerySet = driver.getMachineryList();
+            machinerySet.add(machinery);
+            driver.setMachineryList(machinerySet);
+            driverRepository.save(driver);
             return driver;
         }
         return null;

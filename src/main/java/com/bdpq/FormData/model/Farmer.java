@@ -28,6 +28,8 @@ public class Farmer extends Person {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<FarmField> farmFields;
+    @ManyToMany
+    private Set<JobCard> jobCards;
 
     @Override
     public int hashCode() {

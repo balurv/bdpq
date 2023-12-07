@@ -1,19 +1,14 @@
 package com.bdpq.FormData.controller;
 
 
-import com.bdpq.FormData.dto.PersonDto;
-import com.bdpq.FormData.mapper.PersonMapper;
 import com.bdpq.FormData.model.Driver;
 import com.bdpq.FormData.model.DriverLicense;
-import com.bdpq.FormData.model.Farmer;
-import com.bdpq.FormData.repository.DriverRepository;
+import com.bdpq.FormData.model.Machinery;
 import com.bdpq.FormData.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,6 +60,22 @@ public class DriverController {
         Driver person = driverService.deleteDriver(id);
         if (person != null) {
             return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @PatchMapping("/{driverId}/driverlicense")
+    public ResponseEntity<?> addDriverLicense(@PathVariable Long driverId, @RequestBody DriverLicense driverLicense){
+        Driver driver = driverService.updateDriverLicense(driverId, driverLicense);
+        if(driver != null){
+            return new ResponseEntity<>(driver, HttpStatus.OK);
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @PatchMapping("/{driverId}/machine")
+    public  ResponseEntity<?> addMachiney(@PathVariable Long driverId, @RequestBody Machinery machinery){
+        Driver driver = driverService.updateMachinery(driverId, machinery);
+        if(driver != null){
+            return new ResponseEntity<>(driver, HttpStatus.OK);
         }
         return ResponseEntity.notFound().build();
     }

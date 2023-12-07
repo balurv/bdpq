@@ -43,10 +43,7 @@ public class FarmerController {
 
     @GetMapping("/farmfield")
     public ResponseEntity<?> getPersonFarmField(@RequestParam Long personId){
-        Map<String, String> param = new HashMap<>();
-        System.out.println("get farField hitting");
-        param.put("id", personId.toString());
-        Optional<Farmer> dbperson = personService.getFarmer(param);
+        Optional<Farmer> dbperson = personService.getFarmerById(personId);
         if(dbperson.isPresent()){
             Farmer person = dbperson.get();
             return new ResponseEntity<>(person.getFarmFields(), HttpStatus.OK);

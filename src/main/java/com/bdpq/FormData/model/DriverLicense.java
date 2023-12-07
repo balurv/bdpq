@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -20,9 +21,15 @@ public class DriverLicense {
     private LocalDate expiryDate;
     private String licenseNumber;
     private LocalDate dob;
-    private MachinaryType machineryType;
+    @Enumerated(EnumType.STRING)
+    private MachineryType machineryType;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "driver_id")
     private Driver driving_license;
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, issueDate, expiryDate,licenseNumber, dob);
+    }
 }

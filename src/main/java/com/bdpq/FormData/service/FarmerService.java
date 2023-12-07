@@ -104,9 +104,9 @@ public class FarmerService implements UserDetailsService {
     }
 
     public Farmer updateFarmerFarmField(Long farmerId, FarmField farmField) {
-        Map<String, String> param = new HashMap<>();
-        param.put("id", farmerId.toString());
-        Optional<Farmer> optionalFarmer = getFarmer(param);
+//        Map<String, String> param = new HashMap<>();
+//        param.put("id", farmerId.toString());
+        Optional<Farmer> optionalFarmer = getFarmerById(farmerId);
         if (optionalFarmer.isPresent()) {
             Farmer farmer = optionalFarmer.get();
             farmField.setOwner(farmer);
@@ -125,4 +125,7 @@ public class FarmerService implements UserDetailsService {
         return null;
     }
 
+    public Optional<Farmer> getFarmerById(Long farmerId) {
+        return personRepository.findById(Math.toIntExact(farmerId));
+    }
 }

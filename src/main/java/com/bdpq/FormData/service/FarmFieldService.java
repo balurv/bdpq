@@ -65,4 +65,8 @@ public class FarmFieldService {
         }
         return null;
     }
+
+    public Optional<FarmField> getFarmFieldById(Long farmFieldId) {
+       return farmFieldRepository.findById(farmFieldId);
+    }
 }

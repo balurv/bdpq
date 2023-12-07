@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     @NotBlank(message = "Name is required")
     @Column(nullable = false, unique = true)
     private String name;
