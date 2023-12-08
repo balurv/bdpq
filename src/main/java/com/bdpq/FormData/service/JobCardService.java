@@ -74,11 +74,12 @@ public class JobCardService {
         return jobCard;
     }
 
-    public List<JobCard> getOpenedJobCards() {
-        return jobCardRepository.getOpenJobCards();
+    public List<JobCard> getJobCardByStatus(JobStatus jobStatus, Long farmerId) {
+        return jobCardRepository.getJobCard(farmerId, jobStatus);
     }
 
     public List<JobCard> getJobCard(Long farmerId) {
         return jobCardRepository.getJobCard(farmerId);
     }
+
 }

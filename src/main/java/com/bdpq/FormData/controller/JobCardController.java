@@ -2,6 +2,7 @@ package com.bdpq.FormData.controller;
 
 import com.bdpq.FormData.dto.FarmerJobCard;
 import com.bdpq.FormData.model.JobCard;
+import com.bdpq.FormData.model.JobStatus;
 import com.bdpq.FormData.service.JobCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,9 @@ public class JobCardController {
         JobCard jobCard= jobCardService.create(farmerJobCard);
         return new ResponseEntity<>(jobCard, HttpStatus.CREATED);
     }
-    @GetMapping
-    public ResponseEntity<?> getOpenJobCard(){
-        List<JobCard> jobCardList = jobCardService.getOpenedJobCards();
+    @GetMapping("/status")
+    public ResponseEntity<?>getJobCardByStatus(@RequestParam JobStatus jobStatus, @RequestParam Long farmerId){
+        List<JobCard> jobCardList = jobCardService.getJobCardByStatus(jobStatus, farmerId);
         if(!jobCardList.isEmpty()){
             return new ResponseEntity<>(jobCardList, HttpStatus.OK);
         }
