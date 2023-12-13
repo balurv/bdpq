@@ -1,16 +1,18 @@
 package com.bdpq.FormData.service;
 
-import com.bdpq.FormData.dto.FarmerJobCard;
+import com.bdpq.FormData.dto.FarmerJobCardDto;
+import com.bdpq.FormData.dto.JobCardFilterDto;
 import com.bdpq.FormData.model.FarmField;
 import com.bdpq.FormData.model.Farmer;
 import com.bdpq.FormData.model.JobCard;
 import com.bdpq.FormData.model.JobStatus;
 import com.bdpq.FormData.repository.JobCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,7 +54,7 @@ public class JobCardService {
         return jobCard;
     }
 
-    public JobCard create(FarmerJobCard farmerJobCard) {
+    public JobCard create(FarmerJobCardDto farmerJobCard) {
         JobCard jobCard = new JobCard();
 
         Set<Farmer> farmerSet = new HashSet<>();
@@ -74,12 +76,17 @@ public class JobCardService {
         return jobCard;
     }
 
-    public List<JobCard> getJobCardByStatus(JobStatus jobStatus, Long farmerId) {
-        return jobCardRepository.getJobCard(farmerId, jobStatus);
+    public Page<JobCard> getJobCardByStatus(JobStatus jobStatus, Long farmerId, Pageable pageable) {
+        return jobCardRepository.getJobCard(farmerId, jobStatus, pageable);
     }
 
-    public List<JobCard> getJobCard(Long farmerId) {
-        return jobCardRepository.getJobCard(farmerId);
+    public Page<JobCard> getJobCard(Long farmerId, Pageable pageable) {
+        return jobCardRepository.getJobCard(farmerId, pageable);
     }
-
+    public Page<JobCard> getAllJobCardByStatus(JobStatus jobStatus, Pageable pageable){
+        return jobCardRepository.getJobCardsByStatus(jobStatus, pageable);
+    }
+    public Page<JobCard> getJobCard(JobCardFilterDto jobCardFilterDto, Pageable pageable) {
+        return getAllJobCardByStatus(JobStatus.OPEN, pageable);
+    }
 }
