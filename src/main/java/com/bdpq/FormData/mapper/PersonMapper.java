@@ -29,4 +29,14 @@ public class PersonMapper {
         farmer.setRole(personDto.getRole());
         return farmer;
     }
+    public static Driver toDriver(PersonDto signUpDto) {
+        Driver driver = new Driver();
+        driver.setName(signUpDto.getName());
+        driver.setPassword(signUpDto.getPassword());
+        driver.setEmail(signUpDto.getEmail());
+        driver.setPhone(signUpDto.getPhone());
+        driver.setGender(signUpDto.getGender());
+        driver.setCreatedOn(signUpDto.getCreatedOn());
+        return driver;
+    }
 }

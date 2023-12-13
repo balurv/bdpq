@@ -1,6 +1,7 @@
 package com.bdpq.FormData.controller;
 
 
+import com.bdpq.FormData.dto.PersonDto;
 import com.bdpq.FormData.model.Driver;
 import com.bdpq.FormData.model.DriverLicense;
 import com.bdpq.FormData.model.Machinery;
@@ -8,20 +9,41 @@ import com.bdpq.FormData.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Optional;import com.bdpq.FormData.mapper.PersonMapper;
+
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/driver")
 public class DriverController {
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private DriverService driverService;
     @PostMapping
     public ResponseEntity<Driver> saveDriver(@RequestBody Driver dirver) {
         Driver savedPerson = driverService.saveDriver(dirver);
         return new ResponseEntity<>(savedPerson, HttpStatus.CREATED);
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerDriver(@RequestBody PersonDto signUpDto ){
+        Map<String, String> params = new HashMap<>();
+        params.put("email", signUpDto.getEmail());
+        params.put("phone", signUpDto.getPhone());
+        if(!driverService.getDriver(params).isPresent()){
+            Driver driver = PersonMapper.toDriver(signUpDto);
+            driver.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+            driverService.saveDriver(driver);
+            return new ResponseEntity<>("User Registered Successful", HttpStatus.OK );
+        }
+        else{
+            return new ResponseEntity<>("Email already exist", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
