@@ -27,7 +27,7 @@ public class FarmField {
     @Enumerated(EnumType.STRING)
     private SoilType soilType;
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "farmer_id")
     private Farmer owner;
     @OneToMany (mappedBy = "farmField", cascade = CascadeType.ALL)

@@ -1,5 +1,6 @@
 package com.bdpq.FormData.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -16,10 +17,13 @@ import java.util.Set;
 @NoArgsConstructor
 public class Driver extends Person{
     @OneToMany(mappedBy = "driving_license", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<DriverLicense> license;
     @OneToMany(mappedBy = "vehicle_owner", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Machinery> machineryList;
     @ManyToMany
+    @JsonIgnore
     private Set<JobCard> jobCards;
     @Override
     public int hashCode() {

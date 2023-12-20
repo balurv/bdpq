@@ -1,13 +1,13 @@
 package com.bdpq.FormData.dto;
 
 import com.bdpq.FormData.model.MachineryType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobCardFilterDto {
